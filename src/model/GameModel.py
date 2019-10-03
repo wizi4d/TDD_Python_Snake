@@ -12,7 +12,6 @@ class GameWorld:
 
     def take_turn(self):
         self.snake.move()
-        pass
 
 
 class Snake:
@@ -27,9 +26,15 @@ class Snake:
         self.direction = self.direction.to_right()
 
     def move(self):
+        self._move_body_without_head()
+        self._move_head()
+
+    def _move_body_without_head(self):
         for i in range(len(self.body) - 1, 0, -1):
             self.body[i].x = self.body[i - 1].x
             self.body[i].y = self.body[i - 1].y
+
+    def _move_head(self):
         if self.direction is Directions.Up:
             self.body[0].y = self.body[0].y - 1
         elif self.direction is Directions.Right:
