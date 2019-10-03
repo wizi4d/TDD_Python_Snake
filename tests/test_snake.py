@@ -37,3 +37,19 @@ class TestSnake:
 
         snake.turn_left()
         assert snake.direction is Directions.Up
+
+    def test_should_turn_snake_right(self):
+        snake = self.game_world.snake
+        assert snake.direction is Directions.Up
+
+        snake.turn_right()
+        assert snake.direction is Directions.Right
+
+        snake.turn_right()
+        assert snake.direction is Directions.Down
+
+        snake.turn_right()
+        assert snake.direction is Directions.Left
+
+        snake.turn_right()
+        assert snake.direction is Directions.Up
