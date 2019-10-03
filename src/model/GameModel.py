@@ -1,3 +1,5 @@
+from enum import Enum
+
 import config
 
 
@@ -15,14 +17,7 @@ class Snake:
         self.direction = Directions.Up
 
     def turn_left(self):
-        if self.direction == Directions.Up:
-            self.direction = Directions.Left
-        elif self.direction == Directions.Left:
-            self.direction = Directions.Down
-        elif self.direction == Directions.Down:
-            self.direction = Directions.Right
-        elif self.direction == Directions.Right:
-            self.direction = Directions.Up
+        self.direction = self.direction.to_left()
 
 
 class Point2D():
@@ -31,8 +26,11 @@ class Point2D():
         self.y = y
 
 
-class Directions:
-    Up = "up"
-    Down = "down"
-    Left = "left"
-    Right = "right"
+class Directions(Enum):
+    Up = 1
+    Right = 2
+    Down = 3
+    Left = 4
+
+    def to_left(self):
+        return Directions(self.value - 1) if self is not Directions.Up else Directions.Left

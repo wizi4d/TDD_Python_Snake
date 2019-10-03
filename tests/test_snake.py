@@ -13,7 +13,7 @@ class TestSnake:
         snake = self.game_world.snake
         assert snake is not None, "snake exists"
         assert len(snake.body) == 2
-        assert snake.direction == Directions.Up
+        assert snake.direction is Directions.Up
         assert snake.body[0].x == 5
         assert snake.body[0].y == 5
 
@@ -24,16 +24,16 @@ class TestSnake:
 
     def test_should_turn_snake_left(self):
         snake = self.game_world.snake
-        assert snake.direction == Directions.Up
+        assert snake.direction is Directions.Up
 
         snake.turn_left()
-        assert snake.direction == Directions.Left
+        assert snake.direction is Directions.Left
 
         snake.turn_left()
-        assert snake.direction == Directions.Down
+        assert snake.direction is Directions.Down
 
         snake.turn_left()
-        assert snake.direction == Directions.Right
+        assert snake.direction is Directions.Right
 
         snake.turn_left()
-        assert snake.direction == Directions.Up
+        assert snake.direction is Directions.Up
