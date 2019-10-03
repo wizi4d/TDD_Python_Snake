@@ -19,6 +19,9 @@ class Snake:
     def turn_left(self):
         self.direction = self.direction.to_left()
 
+    def turn_right(self):
+        self.direction = self.direction.to_right()
+
 
 class Point2D():
     def __init__(self, x, y):
@@ -34,3 +37,6 @@ class Directions(Enum):
 
     def to_left(self):
         return Directions(self.value - 1) if self is not Directions.Up else Directions.Left
+
+    def to_right(self):
+        return Directions(self.value + 1) if self is not Directions.Left else Directions.Up
