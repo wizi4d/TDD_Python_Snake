@@ -120,3 +120,37 @@ class TestSnake:
         cur_2nd_part_pos = snake.body[1]
         assert cur_2nd_part_pos == prev_head_pos
     # endregion
+
+    # region snake crawls over border
+    def test_should_check_snake_crawl_over_top_border(self):
+        snake = self.game_world.snake
+        for _ in range(snake.body[0].y, 0, -1):
+            self.game_world.take_turn()
+
+        assert snake.body[0].y == config.SCENE_HEIGHT
+
+    def test_should_check_snake_crawl_over_bottom_border(self):
+        snake = self.game_world.snake
+        snake.turn_left()
+        snake.turn_left()
+        for _ in range(snake.body[0].y, config.SCENE_HEIGHT + 1, 1):
+            self.game_world.take_turn()
+
+        assert snake.body[0].y == 1
+
+    def test_should_check_snake_crawl_over_left_border(self):
+        snake = self.game_world.snake
+        snake.turn_left()
+        for _ in range(snake.body[0].x, 0, -1):
+            self.game_world.take_turn()
+
+        assert snake.body[0].x == config.SCENE_WIDTH
+
+    def test_should_check_snake_crawl_over_right_border(self):
+        snake = self.game_world.snake
+        snake.turn_right()
+        for _ in range(snake.body[0].x, config.SCENE_WIDTH + 1, 1):
+            self.game_world.take_turn()
+
+        assert snake.body[0].x == 1
+    # endregion
