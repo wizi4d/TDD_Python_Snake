@@ -16,8 +16,8 @@ class TestSnake:
         assert snake is not None, "snake exists"
         assert len(snake.body) == 2
         assert snake.direction is Directions.Up
-        assert snake.body[0].x == config.SCENE_WIDTH // 2
-        assert snake.body[0].y == config.SCENE_HEIGHT // 2
+        assert snake.head.x == config.SCENE_WIDTH // 2
+        assert snake.head.y == config.SCENE_HEIGHT // 2
 
         apple = self.game_world.apple
         assert apple is not None, "apple exists"
@@ -63,13 +63,12 @@ class TestSnake:
     def test_should_move_snake_up(self):
         snake = self.game_world.snake
         assert snake.direction is Directions.Up
-        prev_head_pos = copy.copy(snake.body[0])
+        prev_head_pos = copy.copy(snake.head)
 
         self.game_world.take_turn()
 
-        cur_head_pos = snake.body[0]
-        assert cur_head_pos.x == prev_head_pos.x
-        assert cur_head_pos.y == prev_head_pos.y - 1
+        assert snake.head.x == prev_head_pos.x
+        assert snake.head.y == prev_head_pos.y - 1
 
         cur_2nd_part_pos = snake.body[1]
         assert cur_2nd_part_pos == prev_head_pos
@@ -77,14 +76,13 @@ class TestSnake:
     def test_should_move_snake_right(self):
         snake = self.game_world.snake
         assert snake.direction is Directions.Up
-        prev_head_pos = copy.copy(snake.body[0])
+        prev_head_pos = copy.copy(snake.head)
 
         self.game_world.snake.turn_right()
         self.game_world.take_turn()
 
-        cur_head_pos = snake.body[0]
-        assert cur_head_pos.x == prev_head_pos.x + 1
-        assert cur_head_pos.y == prev_head_pos.y
+        assert snake.head.x == prev_head_pos.x + 1
+        assert snake.head.y == prev_head_pos.y
 
         cur_2nd_part_pos = snake.body[1]
         assert cur_2nd_part_pos == prev_head_pos
@@ -92,15 +90,14 @@ class TestSnake:
     def test_should_move_snake_down(self):
         snake = self.game_world.snake
         assert snake.direction is Directions.Up
-        prev_head_pos = copy.copy(snake.body[0])
+        prev_head_pos = copy.copy(snake.head)
 
         self.game_world.snake.turn_right()
         self.game_world.snake.turn_right()
         self.game_world.take_turn()
 
-        cur_head_pos = snake.body[0]
-        assert cur_head_pos.x == prev_head_pos.x
-        assert cur_head_pos.y == prev_head_pos.y + 1
+        assert snake.head.x == prev_head_pos.x
+        assert snake.head.y == prev_head_pos.y + 1
 
         cur_2nd_part_pos = snake.body[1]
         assert cur_2nd_part_pos == prev_head_pos
@@ -108,14 +105,13 @@ class TestSnake:
     def test_should_move_snake_left(self):
         snake = self.game_world.snake
         assert snake.direction is Directions.Up
-        prev_head_pos = copy.copy(snake.body[0])
+        prev_head_pos = copy.copy(snake.head)
 
         self.game_world.snake.turn_left()
         self.game_world.take_turn()
 
-        cur_head_pos = snake.body[0]
-        assert cur_head_pos.x == prev_head_pos.x - 1
-        assert cur_head_pos.y == prev_head_pos.y
+        assert snake.head.x == prev_head_pos.x - 1
+        assert snake.head.y == prev_head_pos.y
 
         cur_2nd_part_pos = snake.body[1]
         assert cur_2nd_part_pos == prev_head_pos
@@ -125,34 +121,34 @@ class TestSnake:
     # region snake crawls over border
     def test_should_check_snake_crawl_over_top_border(self):
         snake = self.game_world.snake
-        for _ in range(snake.body[0].y, 0, -1):
+        for _ in range(snake.head.y, 0, -1):
             self.game_world.take_turn()
 
-        assert snake.body[0].y == config.SCENE_HEIGHT
+        assert snake.head.y == config.SCENE_HEIGHT
 
     def test_should_check_snake_crawl_over_bottom_border(self):
         snake = self.game_world.snake
         snake.turn_left()
         snake.turn_left()
-        for _ in range(snake.body[0].y, config.SCENE_HEIGHT + 1, 1):
+        for _ in range(snake.head.y, config.SCENE_HEIGHT + 1, 1):
             self.game_world.take_turn()
 
-        assert snake.body[0].y == 1
+        assert snake.head.y == 1
 
     def test_should_check_snake_crawl_over_left_border(self):
         snake = self.game_world.snake
         snake.turn_left()
-        for _ in range(snake.body[0].x, 0, -1):
+        for _ in range(snake.head.x, 0, -1):
             self.game_world.take_turn()
 
-        assert snake.body[0].x == config.SCENE_WIDTH
+        assert snake.head.x == config.SCENE_WIDTH
 
     def test_should_check_snake_crawl_over_right_border(self):
         snake = self.game_world.snake
         snake.turn_right()
-        for _ in range(snake.body[0].x, config.SCENE_WIDTH + 1, 1):
+        for _ in range(snake.head.x, config.SCENE_WIDTH + 1, 1):
             self.game_world.take_turn()
 
-        assert snake.body[0].x == 1
+        assert snake.head.x == 1
 
     # endregion

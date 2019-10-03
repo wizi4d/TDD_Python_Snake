@@ -22,6 +22,10 @@ class Snake:
         self.body.append(Point2D(head.x, head.y + 1))
         self.direction = Directions.Up
 
+    @property
+    def head(self):
+        return self.body[0]
+
     def turn_left(self):
         self.direction = self.direction.to_left()
 
@@ -39,13 +43,13 @@ class Snake:
 
     def _move_head(self):
         if self.direction is Directions.Up:
-            self.body[0].y = config.SCENE_HEIGHT if self.body[0].y == 1 else self.body[0].y - 1
+            self.head.y = config.SCENE_HEIGHT if self.head.y == 1 else self.head.y - 1
         elif self.direction is Directions.Right:
-            self.body[0].x = 1 if self.body[0].x == config.SCENE_WIDTH else self.body[0].x + 1
+            self.head.x = 1 if self.head.x == config.SCENE_WIDTH else self.head.x + 1
         elif self.direction is Directions.Down:
-            self.body[0].y = 1 if self.body[0].y == config.SCENE_HEIGHT else self.body[0].y + 1
+            self.head.y = 1 if self.head.y == config.SCENE_HEIGHT else self.head.y + 1
         elif self.direction is Directions.Left:
-            self.body[0].x = config.SCENE_WIDTH if self.body[0].x == 1 else self.body[0].x - 1
+            self.head.x = config.SCENE_WIDTH if self.head.x == 1 else self.head.x - 1
 
 
 class Point2D:
