@@ -1,3 +1,5 @@
+import copy
+
 import config
 from model.GameModel import GameWorld, Directions
 
@@ -22,6 +24,7 @@ class TestSnake:
         assert 0 <= apple.x < 10
         assert 0 <= apple.y < 10
 
+    # region snake turns
     def test_should_turn_snake_left(self):
         snake = self.game_world.snake
         assert snake.direction is Directions.Up
@@ -53,3 +56,67 @@ class TestSnake:
 
         snake.turn_right()
         assert snake.direction is Directions.Up
+
+    # endregion
+
+    # region snake movement
+    def test_should_move_snake_up(self):
+        snake = self.game_world.snake
+        assert snake.direction is Directions.Up
+        prev_head_pos = copy.copy(snake.body[0])
+
+        self.game_world.take_turn()
+
+        cur_head_pos = snake.body[0]
+        assert cur_head_pos.x == prev_head_pos.x
+        assert cur_head_pos.y == prev_head_pos.y - 1
+
+        cur_2nd_part_pos = snake.body[1]
+        assert cur_2nd_part_pos == prev_head_pos
+
+    def test_should_move_snake_right(self):
+        snake = self.game_world.snake
+        assert snake.direction is Directions.Up
+        prev_head_pos = copy.copy(snake.body[0])
+
+        self.game_world.snake.turn_right()
+        self.game_world.take_turn()
+
+        cur_head_pos = snake.body[0]
+        assert cur_head_pos.x == prev_head_pos.x + 1
+        assert cur_head_pos.y == prev_head_pos.y
+
+        cur_2nd_part_pos = snake.body[1]
+        assert cur_2nd_part_pos == prev_head_pos
+
+    def test_should_move_snake_down(self):
+        snake = self.game_world.snake
+        assert snake.direction is Directions.Up
+        prev_head_pos = copy.copy(snake.body[0])
+
+        self.game_world.snake.turn_right()
+        self.game_world.snake.turn_right()
+        self.game_world.take_turn()
+
+        cur_head_pos = snake.body[0]
+        assert cur_head_pos.x == prev_head_pos.x
+        assert cur_head_pos.y == prev_head_pos.y + 1
+
+        cur_2nd_part_pos = snake.body[1]
+        assert cur_2nd_part_pos == prev_head_pos
+
+    def test_should_move_snake_left(self):
+        snake = self.game_world.snake
+        assert snake.direction is Directions.Up
+        prev_head_pos = copy.copy(snake.body[0])
+
+        self.game_world.snake.turn_left()
+        self.game_world.take_turn()
+
+        cur_head_pos = snake.body[0]
+        assert cur_head_pos.x == prev_head_pos.x - 1
+        assert cur_head_pos.y == prev_head_pos.y
+
+        cur_2nd_part_pos = snake.body[1]
+        assert cur_2nd_part_pos == prev_head_pos
+    # endregion
