@@ -16,8 +16,15 @@ class GameWorld:
 
 class Snake:
     def __init__(self):
-        self.body = [Point2D(5, 5), Point2D(5, 6)]
+        self.body = []
+        head = Point2D(config.SCENE_WIDTH // 2, config.SCENE_HEIGHT // 2)
+        self.body.append(head)
+        self.body.append(Point2D(head.x, head.y + 1))
         self.direction = Directions.Up
+
+    @property
+    def head(self):
+        return self.body[0]
 
     def turn_left(self):
         self.direction = self.direction.to_left()
@@ -36,17 +43,17 @@ class Snake:
 
     def _move_head(self):
         if self.direction is Directions.Up:
-            self.body[0].y = self.body[0].y - 1
+            self.head.y = config.SCENE_HEIGHT if self.head.y == 1 else self.head.y - 1
         elif self.direction is Directions.Right:
-            self.body[0].x = self.body[0].x + 1
+            self.head.x = 1 if self.head.x == config.SCENE_WIDTH else self.head.x + 1
         elif self.direction is Directions.Down:
-            self.body[0].y = self.body[0].y + 1
+            self.head.y = 1 if self.head.y == config.SCENE_HEIGHT else self.head.y + 1
         elif self.direction is Directions.Left:
-            self.body[0].x = self.body[0].x - 1
+            self.head.x = config.SCENE_WIDTH if self.head.x == 1 else self.head.x - 1
 
 
 class Point2D:
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         self.x = x
         self.y = y
 
