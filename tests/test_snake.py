@@ -1,4 +1,5 @@
-from src.model.GameModel import GameWorld, Directions
+import config
+from model.GameModel import GameWorld, Directions
 
 
 class TestSnake:
@@ -6,8 +7,8 @@ class TestSnake:
         self.game_world = GameWorld()
 
     def test_should_init_game_world(self):
-        assert self.game_world.height == 10
-        assert self.game_world.width == 10
+        assert self.game_world.height == config.SCENE_HEIGHT
+        assert self.game_world.width == config.SCENE_WIDTH
 
         snake = self.game_world.snake
         assert snake is not None, "snake exists"

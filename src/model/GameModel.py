@@ -1,7 +1,10 @@
+import config
+
+
 class GameWorld:
     def __init__(self):
-        self.height = 10
-        self.width = 10
+        self.height = config.SCENE_HEIGHT
+        self.width = config.SCENE_WIDTH
         self.snake = Snake()
         self.apple = Point2D(1, 1)
 
