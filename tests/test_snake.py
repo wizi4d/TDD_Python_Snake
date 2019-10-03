@@ -16,13 +16,13 @@ class TestSnake:
         assert snake is not None, "snake exists"
         assert len(snake.body) == 2
         assert snake.direction is Directions.Up
-        assert snake.body[0].x == 5
-        assert snake.body[0].y == 5
+        assert snake.body[0].x == config.SCENE_WIDTH // 2
+        assert snake.body[0].y == config.SCENE_HEIGHT // 2
 
         apple = self.game_world.apple
         assert apple is not None, "apple exists"
-        assert 0 <= apple.x < 10
-        assert 0 <= apple.y < 10
+        assert 0 < apple.x < config.SCENE_WIDTH
+        assert 0 < apple.y < config.SCENE_HEIGHT
 
     # region snake turns
     def test_should_turn_snake_left(self):
@@ -119,6 +119,7 @@ class TestSnake:
 
         cur_2nd_part_pos = snake.body[1]
         assert cur_2nd_part_pos == prev_head_pos
+
     # endregion
 
     # region snake crawls over border
@@ -153,4 +154,5 @@ class TestSnake:
             self.game_world.take_turn()
 
         assert snake.body[0].x == 1
+
     # endregion

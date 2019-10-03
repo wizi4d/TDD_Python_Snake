@@ -16,7 +16,10 @@ class GameWorld:
 
 class Snake:
     def __init__(self):
-        self.body = [Point2D(5, 5), Point2D(5, 6)]
+        self.body = []
+        head = Point2D(config.SCENE_WIDTH // 2, config.SCENE_HEIGHT // 2)
+        self.body.append(head)
+        self.body.append(Point2D(head.x, head.y + 1))
         self.direction = Directions.Up
 
     def turn_left(self):
@@ -46,7 +49,7 @@ class Snake:
 
 
 class Point2D:
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         self.x = x
         self.y = y
 
