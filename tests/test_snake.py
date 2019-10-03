@@ -21,3 +21,19 @@ class TestSnake:
         assert apple is not None, "apple exists"
         assert 0 <= apple.x < 10
         assert 0 <= apple.y < 10
+
+    def test_should_turn_snake_left(self):
+        snake = self.game_world.snake
+        assert snake.direction == Directions.Up
+
+        snake.turn_left()
+        assert snake.direction == Directions.Left
+
+        snake.turn_left()
+        assert snake.direction == Directions.Down
+
+        snake.turn_left()
+        assert snake.direction == Directions.Right
+
+        snake.turn_left()
+        assert snake.direction == Directions.Up
