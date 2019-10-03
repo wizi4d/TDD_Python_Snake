@@ -37,12 +37,20 @@ class Snake:
     def _move_head(self):
         if self.direction is Directions.Up:
             self.body[0].y = self.body[0].y - 1
+            if self.body[0].y == 0:
+                self.body[0].y = config.SCENE_HEIGHT
         elif self.direction is Directions.Right:
             self.body[0].x = self.body[0].x + 1
+            if self.body[0].x == config.SCENE_WIDTH + 1:
+                self.body[0].x = 1
         elif self.direction is Directions.Down:
             self.body[0].y = self.body[0].y + 1
+            if self.body[0].y == config.SCENE_HEIGHT + 1:
+                self.body[0].y = 1
         elif self.direction is Directions.Left:
             self.body[0].x = self.body[0].x - 1
+            if self.body[0].x == 0:
+                self.body[0].x = config.SCENE_WIDTH
 
 
 class Point2D:
