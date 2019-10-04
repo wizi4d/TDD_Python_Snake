@@ -161,4 +161,17 @@ class TestSnake:
         i += 1
         assert i < 10
 
+    def test_should_feed_snake_with_apple(self):
+        snake = self.game_world.snake
+        self.game_world.apple.x = snake.head.x
+        self.game_world.apple.y = snake.head.y - 1
+        apple_pos_before_turn = copy.copy(self.game_world.apple)
+
+        self.game_world.take_turn()
+
+        assert snake.head == apple_pos_before_turn
+        assert self.game_world.apple != apple_pos_before_turn
+        assert len(snake.body) == 3
+        assert snake.body[2] == snake.body[1]
+
     # endregion
