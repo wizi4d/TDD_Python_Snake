@@ -14,9 +14,8 @@ class GameWorld:
     def take_turn(self):
         self.snake.move()
         if self.snake.head == self.apple:
+            self.snake.feed()
             self._spawn_apple()
-            snake_tail = self.snake.body[len(self.snake.body) - 1]
-            self.snake.body.append(Point2D(snake_tail.x, snake_tail.y))
 
     def _spawn_apple(self):
         self.apple = self._get_random_empty_field()
@@ -75,6 +74,10 @@ class Snake:
             self.head.y = 1 if self.head.y == config.SCENE_HEIGHT else self.head.y + 1
         elif self.direction is Directions.Left:
             self.head.x = config.SCENE_WIDTH if self.head.x == 1 else self.head.x - 1
+
+    def feed(self):
+        snake_tail = self.body[len(self.body) - 1]
+        self.body.append(Point2D(snake_tail.x, snake_tail.y))
 
 
 class Point2D:
