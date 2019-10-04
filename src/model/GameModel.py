@@ -15,11 +15,10 @@ class GameWorld:
     def take_turn(self):
         if self.state is not WorldStates.Running:
             return
-
         self.snake.move()
         if self.snake.head == self.apple:
             self.snake.feed()
-            if len(self.snake.body) == config.SCENE_WIDTH * config.SCENE_HEIGHT:
+            if self._game_win_condition_reached():
                 self.state = WorldStates.Won
             self._spawn_apple()
 
@@ -42,6 +41,9 @@ class GameWorld:
                     result = False
                     break
         return result
+
+    def _game_win_condition_reached(self):
+        return len(self.snake.body) == config.SCENE_WIDTH * config.SCENE_HEIGHT
 
 
 class Snake:
