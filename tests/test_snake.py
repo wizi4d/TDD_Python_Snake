@@ -1,7 +1,7 @@
 import copy
 
 import config
-from model.GameModel import GameWorld, Directions
+from model.GameModel import GameWorld, Directions, WorldStates
 
 
 class TestSnake:
@@ -11,6 +11,7 @@ class TestSnake:
     def test_should_init_game_world(self):
         assert self.game_world.height == config.SCENE_HEIGHT
         assert self.game_world.width == config.SCENE_WIDTH
+        assert self.game_world.state is WorldStates.Running
 
         snake = self.game_world.snake
         assert len(snake.body) == 2
@@ -175,3 +176,16 @@ class TestSnake:
         assert snake.body[2] == snake.body[1]
 
     # endregion
+
+    def test_should_check_game_won(self):
+        snake = self.game_world.snake
+        self.game_world.apple.x = snake.head.x
+        self.game_world.apple.y = snake.head.y - 1
+
+        for _ in range(config.SCENE_HEIGHT * config.SCENE_WIDTH - len(snake.body) - 1):
+            snake.feed()
+
+        self.game_world.take_turn()
+
+        assert len(snake.body) == config.SCENE_HEIGHT * config.SCENE_WIDTH
+        assert self.game_world.state is WorldStates.Won
