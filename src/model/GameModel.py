@@ -16,13 +16,9 @@ class GameWorld:
         if self.state is not WorldStates.Running:
             return
         self.snake.move()
-        if self.snake.is_bite_herself():
-            self.state = WorldStates.Lost
-        if self.snake.head == self.apple:
-            self.snake.feed()
-            self._spawn_apple()
-        if self._game_win_condition_reached():
-            self.state = WorldStates.Won
+        self._handle_if_game_lost()
+        self._handle_if_snake_found_apple()
+        self._handle_if_game_won()
 
     def _spawn_apple(self):
         self.apple = self._get_random_empty_field()
@@ -46,6 +42,19 @@ class GameWorld:
 
     def _game_win_condition_reached(self):
         return len(self.snake.body) == config.SCENE_WIDTH * config.SCENE_HEIGHT
+
+    def _handle_if_game_lost(self):
+        if self.snake.is_bite_herself():
+            self.state = WorldStates.Lost
+
+    def _handle_if_snake_found_apple(self):
+        if self.snake.head == self.apple:
+            self.snake.feed()
+            self._spawn_apple()
+
+    def _handle_if_game_won(self):
+        if self._game_win_condition_reached():
+            self.state = WorldStates.Won
 
 
 class Snake:
