@@ -13,16 +13,14 @@ class TestSnake:
         assert self.game_world.width == config.SCENE_WIDTH
 
         snake = self.game_world.snake
-        assert snake is not None, "snake exists"
         assert len(snake.body) == 2
         assert snake.direction is Directions.Up
         assert snake.head.x == config.SCENE_WIDTH // 2
         assert snake.head.y == config.SCENE_HEIGHT // 2
 
         apple = self.game_world.apple
-        assert apple is not None, "apple exists"
-        assert 0 < apple.x < config.SCENE_WIDTH
-        assert 0 < apple.y < config.SCENE_HEIGHT
+        assert 0 < apple.x <= config.SCENE_WIDTH
+        assert 0 < apple.y <= config.SCENE_HEIGHT
 
     # region snake turns
     def test_should_turn_snake_left(self):
@@ -150,5 +148,30 @@ class TestSnake:
             self.game_world.take_turn()
 
         assert snake.head.x == 1
+
+    # endregion
+
+    # region food
+    def test_should_place_apple_on_empty_random_field_on_init(self):
+        new_world1 = GameWorld()
+        for i in range(10):
+            new_world2 = GameWorld()
+            if new_world1.apple != new_world2.apple:
+                break
+        i += 1
+        assert i < 10
+
+    def test_should_feed_snake_with_apple(self):
+        snake = self.game_world.snake
+        self.game_world.apple.x = snake.head.x
+        self.game_world.apple.y = snake.head.y - 1
+        apple_pos_before_turn = copy.copy(self.game_world.apple)
+
+        self.game_world.take_turn()
+
+        assert snake.head == apple_pos_before_turn
+        assert self.game_world.apple != apple_pos_before_turn
+        assert len(snake.body) == 3
+        assert snake.body[2] == snake.body[1]
 
     # endregion
