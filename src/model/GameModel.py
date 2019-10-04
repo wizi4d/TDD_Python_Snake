@@ -13,6 +13,10 @@ class GameWorld:
 
     def take_turn(self):
         self.snake.move()
+        if self.snake.head == self.apple:
+            self._spawn_apple()
+            snake_tail = self.snake.body[len(self.snake.body) - 1]
+            self.snake.body.append(Point2D(snake_tail.x, snake_tail.y))
 
     def _spawn_apple(self):
         self.apple = self._get_random_empty_field()
