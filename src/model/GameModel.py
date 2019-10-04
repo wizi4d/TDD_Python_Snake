@@ -9,22 +9,30 @@ class GameWorld:
         self.height = config.SCENE_HEIGHT
         self.width = config.SCENE_WIDTH
         self.snake = Snake()
-        self.apple = self._get_random_empty_field()
+        self._spawn_apple()
 
     def take_turn(self):
         self.snake.move()
 
+    def _spawn_apple(self):
+        self.apple = self._get_random_empty_field()
+
     def _get_random_empty_field(self):
         free_pos, pos_is_free = Point2D(0, 0), False
-        while not pos_is_free:
-            pos_is_free = True
-            free_pos.x = random.randrange(1, config.SCENE_WIDTH)
-            free_pos.y = random.randrange(1, config.SCENE_HEIGHT)
-            for snake_part in self.snake.body:
-                if free_pos == snake_part:
-                    pos_is_free = False
-                    break
+        while not self._is_pos_free(free_pos):
+            free_pos.x = random.randrange(1, config.SCENE_WIDTH + 1)
+            free_pos.y = random.randrange(1, config.SCENE_HEIGHT + 1)
         return free_pos
+
+    def _is_pos_free(self, pos):
+        result = 0 < pos.x <= config.SCENE_WIDTH
+        result = result and 0 < pos.y <= config.SCENE_HEIGHT
+        if result:
+            for snake_part in self.snake.body:
+                if pos == snake_part:
+                    result = False
+                    break
+        return result
 
 
 class Snake:

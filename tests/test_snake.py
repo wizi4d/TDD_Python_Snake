@@ -19,8 +19,8 @@ class TestSnake:
         assert snake.head.y == config.SCENE_HEIGHT // 2
 
         apple = self.game_world.apple
-        assert 0 < apple.x < config.SCENE_WIDTH
-        assert 0 < apple.y < config.SCENE_HEIGHT
+        assert 0 < apple.x <= config.SCENE_WIDTH
+        assert 0 < apple.y <= config.SCENE_HEIGHT
 
     # region snake turns
     def test_should_turn_snake_left(self):
