@@ -1,3 +1,4 @@
+import random
 from enum import Enum
 
 import config
@@ -8,10 +9,22 @@ class GameWorld:
         self.height = config.SCENE_HEIGHT
         self.width = config.SCENE_WIDTH
         self.snake = Snake()
-        self.apple = Point2D(1, 1)
+        self.apple = self._get_random_empty_field()
 
     def take_turn(self):
         self.snake.move()
+
+    def _get_random_empty_field(self):
+        free_pos, pos_is_free = Point2D(0, 0), False
+        while not pos_is_free:
+            pos_is_free = True
+            free_pos.x = random.randrange(1, config.SCENE_WIDTH)
+            free_pos.y = random.randrange(1, config.SCENE_HEIGHT)
+            for snake_part in self.snake.body:
+                if free_pos == snake_part:
+                    pos_is_free = False
+                    break
+        return free_pos
 
 
 class Snake:
