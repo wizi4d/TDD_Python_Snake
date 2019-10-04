@@ -16,11 +16,13 @@ class GameWorld:
         if self.state is not WorldStates.Running:
             return
         self.snake.move()
+        if self.snake.is_bite_herself():
+            self.state = WorldStates.Lost
         if self.snake.head == self.apple:
             self.snake.feed()
-            if self._game_win_condition_reached():
-                self.state = WorldStates.Won
             self._spawn_apple()
+        if self._game_win_condition_reached():
+            self.state = WorldStates.Won
 
     def _spawn_apple(self):
         self.apple = self._get_random_empty_field()
@@ -84,8 +86,16 @@ class Snake:
             self.head.x = config.SCENE_WIDTH if self.head.x == 1 else self.head.x - 1
 
     def feed(self):
-        snake_tail = self.body[len(self.body) - 1]
+        snake_tail = self.body[-1]
         self.body.append(Point2D(snake_tail.x, snake_tail.y))
+
+    def is_bite_herself(self):
+        result = False
+        for part in self.body[1:]:
+            if self.head == part:
+                result = True
+                break
+        return result
 
 
 class Point2D:
@@ -118,3 +128,4 @@ class Directions(Enum):
 class WorldStates(Enum):
     Running = 1
     Won = 2
+    Lost = 3
