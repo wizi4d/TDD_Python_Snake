@@ -189,3 +189,20 @@ class TestSnake:
 
         assert len(snake.body) == config.SCENE_HEIGHT * config.SCENE_WIDTH
         assert self.game_world.state is WorldStates.Won
+
+    def test_should_check_game_lose(self):
+        snake = self.game_world.snake
+        for _ in range(3):
+            snake.feed()
+        self.game_world.take_turn()
+        snake.turn_right()
+        self.game_world.take_turn()
+        snake.turn_right()
+        self.game_world.take_turn()
+        snake.turn_right()
+        assert self.game_world.state is WorldStates.Running
+
+        self.game_world.take_turn()
+
+        assert snake.head == snake.body[-1]
+        assert self.game_world.state is WorldStates.Lost
