@@ -8,13 +8,19 @@ class GameWorld:
     def __init__(self):
         self.height = config.SCENE_HEIGHT
         self.width = config.SCENE_WIDTH
+        self.state = WorldStates.Running
         self.snake = Snake()
         self._spawn_apple()
 
     def take_turn(self):
+        if self.state is not WorldStates.Running:
+            return
+
         self.snake.move()
         if self.snake.head == self.apple:
             self.snake.feed()
+            if len(self.snake.body) == config.SCENE_WIDTH * config.SCENE_HEIGHT:
+                self.state = WorldStates.Won
             self._spawn_apple()
 
     def _spawn_apple(self):
@@ -105,3 +111,8 @@ class Directions(Enum):
 
     def to_right(self):
         return Directions(self.value + 1) if self is not Directions.Left else Directions.Up
+
+
+class WorldStates(Enum):
+    Running = 1
+    Won = 2
