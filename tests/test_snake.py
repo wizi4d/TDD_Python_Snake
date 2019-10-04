@@ -1,7 +1,7 @@
 import copy
 
 import config
-from model.GameModel import GameWorld, Directions, WorldStates
+from game_model import GameWorld, Directions, WorldStates
 
 
 class TestSnake:
