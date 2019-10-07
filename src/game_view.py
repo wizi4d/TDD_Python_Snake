@@ -19,7 +19,6 @@ class Renderer:
     def clear(self):
         for item in self._window.items[:]:
             item.undraw()
-        # self._window.update()
 
     def _draw_field(self):
         for x in range(config.SCENE_WIDTH):
@@ -51,3 +50,15 @@ class Renderer:
         self._draw_game_object(snake.head, "blue")
         for part in snake.body[1:]:
             self._draw_game_object(part, "green")
+
+    def draw_congratulation(self):
+        self._draw_message("YOU WON!")
+
+    def draw_lost_message(self):
+        self._draw_message("YOU LOST")
+
+    def _draw_message(self, message):
+        screen_center = Point(config.SCENE_WIDTH // 2 * config.TILE_SIZE, config.SCENE_HEIGHT // 2 * config.TILE_SIZE)
+        message = Text(screen_center, message)
+        message.setSize(30)
+        message.draw(self._window)
