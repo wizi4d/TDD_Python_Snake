@@ -24,7 +24,7 @@ class GameWorld:
         self.apple = self._get_random_empty_field()
 
     def _get_random_empty_field(self):
-        free_pos, pos_is_free = Point2D(0, 0), False
+        free_pos = Point2D(0, 0)
         while not self._is_pos_free(free_pos):
             free_pos.x = random.randrange(1, config.SCENE_WIDTH + 1)
             free_pos.y = random.randrange(1, config.SCENE_HEIGHT + 1)
